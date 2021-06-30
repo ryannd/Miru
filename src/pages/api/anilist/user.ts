@@ -1,5 +1,4 @@
-const fetch = require('node-fetch');
-const ANILIST_API = 'https://graphql.anilist.co'
+import fetchData from "../../../utils/api/graphql/fetchNoVar";
 
 export default async function handler(req,res) {
     if(!req.cookies.anilist) {
@@ -33,36 +32,3 @@ export default async function handler(req,res) {
     }
 }
 
-async function fetchData(req,res,query){
-    let options = {
-        method: 'POST',
-        headers: {
-            'Authorization': 'Bearer ' + req.cookies.anilist,
-            'Content-Type': 'application/json',
-            'Accept': 'application/json',
-        },
-        body: JSON.stringify({
-            query: query
-        })
-    };
-
-    let data =  await fetch(ANILIST_API, options).then(handleResponse).then(handleData).catch(handleError)
-
-    function handleResponse (response) {
-        return response.json().then(function (json) {
-            return response.ok ? json : Promise.reject(json);
-        });
-    }
-
-    function handleData(data) {
-        console.log(data);
-        return data;
-    }
-    
-    function handleError(error) {
-        console.log(error);
-        return error;
-    }
-
-    return data;
-}
