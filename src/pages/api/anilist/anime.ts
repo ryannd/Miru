@@ -1,11 +1,8 @@
 import fetchDataWithVar from "../../../utils/api/graphql/fetchWithVar";
+const ANILIST_API = 'https://graphql.anilist.co'
 
 export default async function handler(req,res) {
-    if(!req.cookies.anilist) {
-        res.send(null)
-    }
-    else {
-        let userId = req.cookies.user_id_anilist;
+    let userId = req.cookies.user_id_anilist;
         console.log(userId);
         let query = `
         query($id: Int){
@@ -43,6 +40,5 @@ export default async function handler(req,res) {
 
         let data = await fetchDataWithVar(req,res,query,variables)
         res.send(data);
-    }
 }
 

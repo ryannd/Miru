@@ -1,4 +1,4 @@
-const Anime = require('4anime-scraper').default;
+import { Anime } from '4anime-scraper'
 
 export default async function handler(req,res) {
     const { title } = req.query;

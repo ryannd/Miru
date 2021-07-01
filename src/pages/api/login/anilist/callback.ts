@@ -1,12 +1,11 @@
 
-const axios = require('axios');
-
-const CLIENT_ID_ANILIST = process.env.REACT_APP_CLIENT_ID_ANILIST
-const ANILIST_CALLBACK = "http://localhost:5000/login/anilist/callback"
-const CLIENT_SECRET_ANILIST = process.env.REACT_APP_CLIENT_SECRET_ANILIST
+import axios from 'axios'
+import Cookies from 'cookies'
+import { CLIENT_ID_ANILIST, CLIENT_SECRET_ANILIST, ANILIST_CALLBACK } from '../../../../../constants';
 
 export default async function handler(req,res) {
     let code = req.query.code;
+    const cookies = new Cookies(req,res);
     const data = await axios({
         url: 'https://anilist.co/api/v2/oauth/token',
         method: 'post',
@@ -17,17 +16,17 @@ export default async function handler(req,res) {
             'redirect_uri': ANILIST_CALLBACK, 
             'code': code
          }
-    }).then((res) => res.data).catch((e) => res.status(401).send("Authentication Failed."));
+    }).then((res) => res.data).catch((e) => res.status(401).send(e));
 
-    res.cookie('anilist',data.access_token,{
+    cookies.set('anilist',data.access_token,{
         maxAge: parseInt(data.expires_in),
         httpOnly: true
     });
 
-    res.cookie('anilist_refresh',data.refresh_token,{
+    cookies.set('anilist_refresh',data.refresh_token,{
         maxAge: parseInt(data.expires_in),
         httpOnly: true
     });
 
-    res.redirect('api/anilist/user');
+    res.redirect('/user');
 }
