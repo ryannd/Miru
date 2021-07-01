@@ -1,5 +1,6 @@
-const axios = require('axios');
-const querystring = require('querystring');
+import axios from 'axios'
+import querystring from 'querystring'
+import { CLIENT_ID_MAL, CLIENT_SECRET_MAL } from '../../../../../constants';
 
 export default async function handler(req,res) {
     const data = await axios({
