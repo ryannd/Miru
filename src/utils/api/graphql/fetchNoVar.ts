@@ -22,12 +22,10 @@ export default async function fetchData(req,res,query){
     }
 
     function handleData(data) {
-        console.log(data);
         return data;
     }
     
     function handleError(error) {
-        console.log(error);
         return error;
     }
 

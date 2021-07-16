@@ -1,9 +1,7 @@
 import fetchDataWithVar from "../../../utils/api/graphql/fetchWithVar";
-const ANILIST_API = 'https://graphql.anilist.co'
 
 export default async function handler(req,res) {
     let userId = req.cookies.user_id_anilist;
-        console.log(userId);
         let query = `
         query($id: Int){
             Media(id: $id, type: ANIME) {

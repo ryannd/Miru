@@ -25,7 +25,13 @@ export default async function handler(req,res) {
         }
     `;
     let data = await fetchData(req,res,query);
-    cookie.set('user_id_anilist', data.data.Viewer.id);
-    res.send(data);
+
+    if(data.errors){
+        res.status(403).send(data)
+    }
+    else {
+        cookie.set('user_id_anilist', data.data.Viewer.id);
+        res.send(data)
+    }
 }
 

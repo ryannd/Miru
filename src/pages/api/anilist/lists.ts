@@ -4,7 +4,6 @@ import Cookies from 'cookies';
 export default async function handler(req,res) {
     const cookie = new Cookies(req,res)
     let userId = cookie.get('user_id_anilist');
-    console.log(userId);
     let query = `
     query($userId: Int){
         MediaListCollection(userId: $userId , status_in: [CURRENT,PLANNING,COMPLETED,DROPPED,PAUSED], type: ANIME) {
