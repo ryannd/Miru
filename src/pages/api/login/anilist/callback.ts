@@ -16,17 +16,22 @@ export default async function handler(req,res) {
             'redirect_uri': ANILIST_CALLBACK, 
             'code': code
          }
-    }).then((res) => res.data).catch((e) => res.status(401).send(e));
+    }).then((res) => res.data).catch((e) => e.response.data);
 
-    cookies.set('anilist',data.access_token,{
-        maxAge: parseInt(data.expires_in),
-        httpOnly: true
-    });
-
-    cookies.set('anilist_refresh',data.refresh_token,{
-        maxAge: parseInt(data.expires_in),
-        httpOnly: true
-    });
-
-    res.redirect('/user');
+    if(data.error){
+        res.redirect('/')
+    }
+    else {
+        cookies.set('anilist',data.access_token,{
+            maxAge: parseInt(data.expires_in),
+            httpOnly: true
+        });
+    
+        cookies.set('anilist_refresh',data.refresh_token,{
+            maxAge: parseInt(data.expires_in),
+            httpOnly: true
+        });
+    
+        res.redirect('/dashboard');
+    }
 }

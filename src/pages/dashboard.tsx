@@ -1,10 +1,10 @@
 import { Grid, GridItem } from '@chakra-ui/react'
+import useUser from '../hooks/useUser'
 import React from 'react'
 import useSWR from 'swr'
 
-const User = () => {
-    const {data, error} = useSWR('/api/anilist/user')
-    console.log(data)
+const Dashboard = () => {
+    const { user, mutate, loggedOut } = useUser();
     return(
         <Grid>
             <GridItem>
@@ -14,4 +14,4 @@ const User = () => {
     )
 }
 
-export default User
+export default Dashboard
